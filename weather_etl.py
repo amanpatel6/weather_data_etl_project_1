@@ -2,9 +2,13 @@ import json
 import requests
 import pandas as pd 
 from datetime import datetime
+import os 
+from dotenv import load_dotenv
+
 
 # Get the weather data from the API - i.e. EXTRACT
-api_key = "8ba78d45122a26e397f45ea63c827de9"
+load_dotenv()
+api_key = os.getenv("OPENWEATHER_API_KEY")
 city = "London,uk"
 url = f"https://api.openweathermap.org/data/2.5/forecast?q={city}&appid={api_key}"
 
