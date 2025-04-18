@@ -10,7 +10,7 @@ from sqlalchemy import text
 
 
 # Get the weather data from the API - i.e. EXTRACT
-def extract():
+def download_weather_api(city):
     load_dotenv()
     api_key = os.getenv("api_key")
     city = "London,uk"
@@ -98,6 +98,8 @@ def load(df):
     print("✅ Data loaded to PostgreSQL successfully!")
 
 if __name__ == "__main__":
-    raw_data = extract()
+    raw_data = download_weather_api("London, uk")
     transformed_df = transform(raw_data)
     load(transformed_df)
+
+
