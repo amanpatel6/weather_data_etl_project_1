@@ -13,13 +13,22 @@ from sqlalchemy import text
 def download_weather_api(city):
     load_dotenv()
     api_key = os.getenv("api_key")
-    city = "London,uk"
     url = f"https://api.openweathermap.org/data/2.5/forecast?q={city}&appid={api_key}"
 
     response = requests.get(url)
     data = response.json() #️This takes the data from the API (in JSON format) and turns it into something Python can understand — like a dictionary.
     
     return data 
+
+def extract(cities):
+    all_data = []
+
+    for city in cities:
+        city_data = download_weather_api(city)
+        all_data.append(city_data)
+
+    return all_data
+
 
 # TRANSFORM
 def transform(data):
@@ -98,7 +107,7 @@ def load(df):
     print("✅ Data loaded to PostgreSQL successfully!")
 
 if __name__ == "__main__":
-    raw_data = download_weather_api("London, uk")
+    raw_data = download_weather_api("Paris")
     transformed_df = transform(raw_data)
     load(transformed_df)
 
